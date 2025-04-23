@@ -19,7 +19,10 @@ const ImageWithFallback: React.FC<ImageWithFallbackProps> = ({
   const [imageSrc, setImageSrc] = useState(src);
   
   useEffect(() => {
-    // Прелоадер изображения
+    setIsLoading(true);
+    setError(false);
+    
+    // Создаем новый экземпляр изображения для предзагрузки
     const img = new Image();
     img.src = src;
     
@@ -30,9 +33,17 @@ const ImageWithFallback: React.FC<ImageWithFallbackProps> = ({
     };
     
     img.onerror = () => {
+      console.error(`Ошибка загрузки изображения: ${src}`);
       setIsLoading(false);
       setError(true);
       setImageSrc(fallbackSrc);
+      
+      // Пытаемся загрузить резервное изображение
+      const fallbackImg = new Image();
+      fallbackImg.src = fallbackSrc;
+      fallbackImg.onerror = () => {
+        console.error(`Также не удалось загрузить резервное изображение: ${fallbackSrc}`);
+      };
     };
     
     // Очистка
@@ -43,14 +54,22 @@ const ImageWithFallback: React.FC<ImageWithFallbackProps> = ({
   }, [src, fallbackSrc]);
 
   return (
-    <div className="relative w-full h-full">
+    <div className="relative w-full h-full overflow-hidden rounded-md bg-green-50">
       {isLoading && (
-        <Skeleton className={`absolute inset-0 ${className} bg-green-100`} />
+        <Skeleton className={`absolute inset-0 ${className} bg-green-100 animate-pulse`} />
       )}
       <img
         src={error ? fallbackSrc : imageSrc}
         alt={alt}
+        loading="eager"
         className={`${className} ${isLoading ? 'opacity-0' : 'opacity-100 transition-opacity duration-500'} w-full h-full object-cover`}
+        onError={() => {
+          if (!error) {
+            console.error(`Ошибка загрузки изображения при рендеринге: ${imageSrc}`);
+            setError(true);
+            setImageSrc(fallbackSrc);
+          }
+        }}
       />
     </div>
   );

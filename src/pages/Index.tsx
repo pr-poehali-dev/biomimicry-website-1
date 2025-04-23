@@ -1,10 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import Hero from "@/components/Hero";
-import { Separator } from "@/components/ui/separator";
-
-// Импортируем разделы
 import IntroSection from "@/components/sections/IntroSection";
 import ExamplesSection from "@/components/sections/ExamplesSection";
 import PrinciplesSection from "@/components/sections/PrinciplesSection";
@@ -14,54 +11,53 @@ import HistorySection from "@/components/sections/HistorySection";
 import MaterialInnovationsSection from "@/components/sections/MaterialInnovationsSection";
 import ApplicationsSection from "@/components/sections/ApplicationsSection";
 import FutureSection from "@/components/sections/FutureSection";
+import BioImagePreloader from "@/components/BioImagePreloader";
 
-/**
- * Главная страница сайта о биомимикрии
- * Включает в себя все секции контента, разделенные по компонентам
- */
 const Index: React.FC = () => {
+  useEffect(() => {
+    // Устанавливаем заголовок страницы
+    document.title = "Биомимикрия - Вдохновение от природы";
+    
+    // Дополнительный код для проверки загрузки изображений
+    window.addEventListener('load', () => {
+      console.log('Страница и все ресурсы полностью загружены');
+    });
+    
+    return () => {
+      window.removeEventListener('load', () => {});
+    };
+  }, []);
+  
   return (
-    <div className="min-h-screen flex flex-col bg-green-50">
+    <div className="min-h-screen bg-white">
+      {/* Компонент предзагрузки изображений */}
+      <BioImagePreloader />
+      
+      {/* Навигация */}
       <Navbar />
       
-      <main className="flex-grow">
-        {/* Заголовок и основное изображение */}
-        <Hero 
-          title="Биомимикрия: Инновации, вдохновленные природой"
-          subtitle="Наука, изучающая лучшие идеи природы и адаптирующая их для решения человеческих проблем"
-          imageSrc="https://images.unsplash.com/photo-1501854140801-50d01698950b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80"
-        />
-        
-        {/* Вводная секция */}
+      {/* Герой-секция */}
+      <Hero 
+        title="Биомимикрия"
+        subtitle="Наука о заимствовании идей у природы"
+        description="Открывайте инновационные технологии, вдохновлённые совершенством природы"
+        imageSrc="https://images.unsplash.com/photo-1581289011663-127f5a2213ef?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80"
+      />
+
+      {/* Основное содержимое */}
+      <main>
         <IntroSection />
-        
-        <Separator className="border-green-200" />
-        
-        {/* Секция с примерами биомимикрии */}
-        <ExamplesSection />
-        
-        {/* Принципы биомимикрии */}
-        <PrinciplesSection />
-
-        {/* Галерея примеров */}
-        <GallerySection />
-
-        {/* Принципы природного дизайна */}
-        <DesignPrinciplesSection />
-
-        {/* История биомимикрии */}
         <HistorySection />
-
-        {/* Материальные инновации */}
+        <ExamplesSection />
+        <PrinciplesSection />
+        <GallerySection />
+        <DesignPrinciplesSection />
         <MaterialInnovationsSection />
-
-        {/* Области применения */}
         <ApplicationsSection />
-        
-        {/* Будущее биомимикрии */}
         <FutureSection />
       </main>
-      
+
+      {/* Подвал */}
       <Footer />
     </div>
   );
