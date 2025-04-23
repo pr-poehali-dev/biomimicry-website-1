@@ -1,5 +1,6 @@
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import ImageWithFallback from "./ImageWithFallback";
 
 interface BioCardProps {
   title: string;
@@ -12,14 +13,10 @@ const BioCard = ({ title, description, imageSrc, learnMoreLink }: BioCardProps) 
   return (
     <Card className="bio-card animate-fade-in">
       <div className="h-64 overflow-hidden">
-        <img
+        <ImageWithFallback
           src={imageSrc}
           alt={title}
           className="w-full h-full object-cover transition-transform hover:scale-105 duration-500"
-          onError={(e) => {
-            const target = e.target as HTMLImageElement;
-            target.src = "/placeholder.svg";
-          }}
         />
       </div>
       <CardHeader>

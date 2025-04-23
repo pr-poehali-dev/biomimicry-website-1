@@ -2,7 +2,11 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import Hero from "@/components/Hero";
 import BioCard from "@/components/BioCard";
+import InfoSection from "@/components/InfoSection";
+import BioGallery from "@/components/BioGallery";
+import ImageWithFallback from "@/components/ImageWithFallback";
 import { Separator } from "@/components/ui/separator";
+import { Button } from "@/components/ui/button";
 
 const Index = () => {
   const biomimicryExamples = [
@@ -20,6 +24,57 @@ const Index = () => {
       title: "Акулья кожа",
       description: "Кожа акулы покрыта крошечными зубчатыми чешуйками (дермальными дентиклями), которые уменьшают сопротивление воды и препятствуют росту бактерий. Эта структура была адаптирована для создания антибактериальных поверхностей в больницах и быстрых купальных костюмов для профессиональных пловцов.",
       imageSrc: "https://images.unsplash.com/photo-1560275619-4cc5fa59d3ae?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
+    }
+  ];
+
+  const moreExamples = [
+    {
+      title: "Крылья стрекозы",
+      imageSrc: "https://images.unsplash.com/photo-1621736583408-4df3cdc273a4?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+      description: "Крылья стрекозы послужили вдохновением для создания более эффективных ветряных турбин. Их уникальная структура позволяет им быть одновременно прочными и легкими."
+    },
+    {
+      title: "Морфо-бабочка",
+      imageSrc: "https://images.unsplash.com/photo-1551522266-1967cb35d2bc?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+      description: "Яркий синий цвет крыльев бабочки морфо происходит не от пигмента, а от микроструктуры чешуек, которые отражают свет определенным образом. Эта технология используется для создания тканей и экранов."
+    },
+    {
+      title: "Термитники",
+      imageSrc: "https://images.unsplash.com/photo-1602871271747-188cc5e21a93?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+      description: "Сложная система вентиляции в термитниках вдохновила архитекторов на создание энергоэффективных зданий с пассивным охлаждением, таких как Eastgate Centre в Зимбабве."
+    },
+    {
+      title: "Паутина",
+      imageSrc: "https://images.unsplash.com/photo-1562911791-c7a97b729ec5?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+      description: "Паутина в пять раз прочнее стали того же веса. Ученые изучают структуру этого материала для создания прочных, легких и биоразлагаемых материалов."
+    },
+    {
+      title: "Клюв зимородка",
+      imageSrc: "https://images.unsplash.com/photo-1635962047786-9a3da1805a7c?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+      description: "Форма клюва зимородка вдохновила инженеров Shinkansen на создание более аэродинамичного и тихого высокоскоростного поезда в Японии."
+    },
+    {
+      title: "Структура дерева",
+      imageSrc: "https://images.unsplash.com/photo-1542273917363-3b1817f69a2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+      description: "Разветвленная структура деревьев и их способность выдерживать сильные ветры вдохновила архитекторов на создание более прочных и эффективных опорных конструкций."
+    }
+  ];
+
+  const applications = [
+    {
+      title: "Архитектура",
+      imageSrc: "https://images.unsplash.com/photo-1487958449943-2429e8be8625?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+      description: "В архитектуре биомимикрия используется для создания энергоэффективных зданий, вдохновленных природными формами и процессами. Примером является здание Eastgate Center в Зимбабве, вентиляционная система которого основана на термитниках."
+    },
+    {
+      title: "Транспорт",
+      imageSrc: "https://images.unsplash.com/photo-1553293491-c3f89a5d097e?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+      description: "В транспортной отрасли дизайн высокоскоростных поездов был улучшен благодаря изучению формы клюва зимородка, а конструкция крыльев самолетов – благодаря наблюдениям за крыльями птиц и насекомых."
+    },
+    {
+      title: "Медицина",
+      imageSrc: "https://images.unsplash.com/photo-1576091160550-2173dba999ef?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+      description: "В медицине биомимикрия помогает создавать новые материалы для искусственных органов, медицинских имплантатов и лекарственных препаратов, вдохновляясь природными процессами и структурами."
     }
   ];
 
@@ -134,14 +189,81 @@ const Index = () => {
                 </ul>
               </div>
               <div className="md:w-1/2">
-                <img 
+                <ImageWithFallback 
                   src="https://images.unsplash.com/photo-1500829243541-74b677fecc30?ixlib=rb-4.0.3&auto=format&fit=crop&w=900&q=80" 
                   alt="Природная структура" 
                   className="rounded-lg shadow-lg w-full h-auto"
-                  onError={(e) => {
-                    const target = e.target as HTMLImageElement;
-                    target.src = "/placeholder.svg";
-                  }}
+                />
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section className="py-16 px-4 md:px-8">
+          <div className="bio-container">
+            <h2 className="bio-heading text-center mb-12">Галерея биомимикрии</h2>
+            <BioGallery items={moreExamples} />
+          </div>
+        </section>
+
+        <section className="bio-section py-16">
+          <div className="bio-container">
+            <h2 className="bio-heading text-center mb-6">История биомимикрии</h2>
+            <p className="text-lg mb-12 max-w-4xl mx-auto text-center">
+              Хотя термин "биомимикрия" появился недавно, люди наблюдали за природой и адаптировали её решения на протяжении тысячелетий.
+            </p>
+            
+            <InfoSection 
+              title="От Леонардо да Винчи до наших дней"
+              content="Великие умы истории, такие как Леонардо да Винчи, черпали вдохновение из природы. Он изучал птиц, чтобы разработать концепции летательных аппаратов. Современная биомимикрия как научная дисциплина сформировалась в последние десятилетия благодаря работам Жанин Бенюс, которая популяризировала этот подход в своей книге 'Биомимикрия: Инновации, вдохновленные природой' (1997)."
+              imageSrc="https://images.unsplash.com/photo-1553986782-9f6de60b51ad?ixlib=rb-4.0.3&auto=format&fit=crop&w=900&q=80"
+              imagePosition="left"
+              buttonText="Узнать больше об истории"
+            />
+          </div>
+        </section>
+
+        <section className="py-16 px-4 md:px-8">
+          <div className="bio-container">
+            <h2 className="bio-heading text-center mb-6">Области применения</h2>
+            <p className="text-lg mb-12 max-w-4xl mx-auto text-center">
+              Биомимикрия находит применение во множестве областей — от архитектуры и дизайна до медицины и робототехники.
+            </p>
+            
+            <BioGallery items={applications} />
+            
+            <div className="text-center mt-12">
+              <Button className="bg-biomimicry hover:bg-biomimicry-dark text-lg py-6 px-8">
+                Исследовать все области применения
+              </Button>
+            </div>
+          </div>
+        </section>
+        
+        <section className="bio-section py-16">
+          <div className="bio-container">
+            <h2 className="bio-heading text-center">Будущее биомимикрии</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-12 mt-12">
+              <div className="bg-white p-8 rounded-lg shadow-md">
+                <h3 className="text-2xl font-semibold text-biomimicry-text mb-4">Устойчивое развитие</h3>
+                <p className="text-gray-700 mb-4">
+                  Биомимикрия играет ключевую роль в создании устойчивых технологий и материалов. Подражая природным процессам, мы можем разрабатывать системы, которые не истощают ресурсы планеты и минимизируют отходы.
+                </p>
+                <ImageWithFallback 
+                  src="https://images.unsplash.com/photo-1472214103451-9374bd1c798e?ixlib=rb-4.0.3&auto=format&fit=crop&w=900&q=80" 
+                  alt="Устойчивое развитие" 
+                  className="rounded-lg w-full h-auto"
+                />
+              </div>
+              <div className="bg-white p-8 rounded-lg shadow-md">
+                <h3 className="text-2xl font-semibold text-biomimicry-text mb-4">Решение глобальных проблем</h3>
+                <p className="text-gray-700 mb-4">
+                  От очистки океанов от пластика до борьбы с изменением климата — биомимикрия предлагает инновационные подходы к решению многих глобальных проблем. Изучая экосистемы и организмы, мы можем найти ответы на самые сложные вызовы современности.
+                </p>
+                <ImageWithFallback 
+                  src="https://images.unsplash.com/photo-1569163139599-0f3532132114?ixlib=rb-4.0.3&auto=format&fit=crop&w=900&q=80" 
+                  alt="Решение глобальных проблем" 
+                  className="rounded-lg w-full h-auto"
                 />
               </div>
             </div>
