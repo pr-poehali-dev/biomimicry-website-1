@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
 
 interface ImageWithFallbackProps {
@@ -16,27 +16,41 @@ const ImageWithFallback: React.FC<ImageWithFallbackProps> = ({
 }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(false);
+  const [imageSrc, setImageSrc] = useState(src);
   
-  const handleLoad = () => {
-    setIsLoading(false);
-  };
-  
-  const handleError = () => {
-    setIsLoading(false);
-    setError(true);
-  };
+  useEffect(() => {
+    // Прелоадер изображения
+    const img = new Image();
+    img.src = src;
+    
+    img.onload = () => {
+      setIsLoading(false);
+      setError(false);
+      setImageSrc(src);
+    };
+    
+    img.onerror = () => {
+      setIsLoading(false);
+      setError(true);
+      setImageSrc(fallbackSrc);
+    };
+    
+    // Очистка
+    return () => {
+      img.onload = null;
+      img.onerror = null;
+    };
+  }, [src, fallbackSrc]);
 
   return (
-    <div className="relative">
+    <div className="relative w-full h-full">
       {isLoading && (
-        <Skeleton className={`absolute inset-0 ${className}`} />
+        <Skeleton className={`absolute inset-0 ${className} bg-green-100`} />
       )}
       <img
-        src={error ? fallbackSrc : src}
+        src={error ? fallbackSrc : imageSrc}
         alt={alt}
-        className={`${className} ${isLoading ? 'opacity-0' : 'opacity-100 transition-opacity duration-300'}`}
-        onLoad={handleLoad}
-        onError={handleError}
+        className={`${className} ${isLoading ? 'opacity-0' : 'opacity-100 transition-opacity duration-500'} w-full h-full object-cover`}
       />
     </div>
   );
